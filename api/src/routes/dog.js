@@ -1,9 +1,9 @@
 const {Router} = require('express');
-const { getAllDogs, getDogById, dogCreate, deleteDog } = require('../controllers/dogs');
+const { getAllDogs, dogCreate, deleteDog, getDogByName } = require('../controllers/dogs');
 const router = Router();
 
 router.get("", getAllDogs)
-router.get("/:id", getDogById)
+router.get("/:name",getDogByName)
 router.post("", dogCreate)
 router.delete("/:id", deleteDog)
 module.exports = router;
