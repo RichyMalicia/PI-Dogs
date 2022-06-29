@@ -8,21 +8,33 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    id: {
-      type: DataTypes.UUID,
+   /*  id: {
+      type: DataTypes.INTEGER,
       primaryKey: true,
       allowNull: false,
-    },
+    }, */
     height: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.JSON,
       allowNull: false,
     },
     weight: {
-      type: DataTypes.STRING,
+      type: DataTypes.JSON,
       allowNull: false,
     },
     life_span: {
       type: DataTypes.STRING
+    },
+    temperament: {
+      type: DataTypes.TEXT
+    },
+    /* image: {
+      type: DataTypes.JSON,
+      allowNull: true
+    }, */
+    mine: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
     }
   },{timestamps: false});
 };
