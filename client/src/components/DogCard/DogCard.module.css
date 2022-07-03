@@ -1,0 +1,33 @@
+.cardDog{
+    width: 18em;
+    height: 24em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin: 1em; 
+}
+.cardDog span{
+    font-size: 1.2rem;
+    margin-bottom: .5em;
+}
+.cardDog img{
+width: 11em;
+height: 9em;
+position: absolute;
+bottom: 1em;
+}
+.info{
+    width: 30em;
+    height: 20em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2.2em;
+}
+hr {
+    width: 80%;
+    margin: .5em 0;
+  
+}

@@ -1,0 +1,12 @@
+.DogsCards{
+   width: 60em;
+   height: 35em;
+   display: flex;
+   flex-direction: row;
+   flex-wrap: wrap;
+   justify-content: center;
+   align-items: center;
+   position: absolute;
+   top: 12%;
+   left: 25%; 
+}
