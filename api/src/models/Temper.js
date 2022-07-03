@@ -1,13 +1,14 @@
 const { DataTypes } = require ('sequelize');
 module.exports = (sequelize) => {
-    sequelize.define('temper', {
-        /* id: {
+    return sequelize.define('temper', {
+        id: {
             type: DataTypes.UUID,
-            primaryKey: true
-        }, */
+            primaryKey: true,
+            allowNull: false,
+        },
         name: {
             type: DataTypes.TEXT,
             allowNull: false
         }
-    })
+    },{timestamps: false});
 }
