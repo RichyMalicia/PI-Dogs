@@ -1,49 +1,52 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useCallback,  useEffect } from 'react';
 import DogCard from '../DogCard/DogCard';
 import style from './DogsCards.module.css'
-import { getAllDogs } from '../../redux/actions/actionsCreator';
+import { cleanDetail, getAllDogs } from '../../redux/actions/actionsCreator';
 import { useDispatch, useSelector } from 'react-redux';
 
 
+
 function DogsCards() { 
-  const [ currentPage, setCurrentPage] = useState(1);
+
   const dispatch = useDispatch();
+  const numPage = useSelector(state => state.numPage)
   const dogsCharged = useSelector(state => state.dogsLoaded);
-  const dogsFiltered = dogsCharged.slice(currentPage, currentPage + 8);
+  /* const dogsFiltered = dogsCharged.slice(numPage, numPage + 8);
+  */ 
+  console.log("NUM ", numPage);
+const grupo = 8;
+let finalCount = numPage * grupo;
+let initialCount = finalCount - grupo;
+let filteredDogs = dogsCharged.slice(initialCount, finalCount)
   
-  const nextPage = () => {
-    setCurrentPage ( currentPage + 8 );
-  }
-  const previousPage = () => {
-    if(currentPage > 1) setCurrentPage(currentPage - 8)
-  }
 
     const perros = useCallback(()=>{
       dispatch(getAllDogs())
     },[dispatch]);
     useEffect(()=>{
       perros();
+      cleanDetail();
     }, [perros])
-    console.log("PERROS  ", dogsCharged)
+  
   return (
     
     <div className={style.DogsCards}>
-      <hr />
-      <button className='btb btn-primary' onClick={previousPage}>Prev</button>
-      <button onClick={nextPage}>Next</button>
-       <hr />
-        {dogsFiltered.map(d=> {
+     
+        {filteredDogs.map(d=> {
         return(
         <DogCard 
                 id={d.id}
                key={d.id}
                name={d.name}
-               img={d.image.url} 
+               img={d.image} 
                temperament={d.temperament}
-               weight={d.weight.metric}
-               height={d.height.metric}
-               life_span={d.life_span}
-               image={d.image}
+               weightMin={d.weightMin}
+               weightMax={d.weightMax}
+               heightMin={d.heightMin}
+               heightMax={d.heightMax}
+               life_spanMin={d.life_spanMin}
+               life_spanMax={d.life_spanMax}
+               
                />
         )})}
             </div>

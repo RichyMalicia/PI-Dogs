@@ -1,38 +1,47 @@
 import React, {useState} from 'react'
 import { useDispatch } from 'react-redux';
-import { getAllDogs, getDogByName } from '../../redux/actions/actionsCreator';
-import style from './Search.module.css'
-function Search() {
-    const [state, setState] = useState("");
+import { getDogByName, setPagination} from '../../redux/actions/actionsCreator';
+/* import style from './Search.module.css' */
+
+
+export default function Search(){
+
     const dispatch = useDispatch();
-    function handleChange(e){
-        setState(e.target.value);
-    };
-    function onClick(){
-        dispatch(getAllDogs());
+    const [name, setName] = useState('');
+
+    function handleSearch(e) {
+        e.preventDefault();
+        setName('');
+        setName(e.target.value)
+    }
+    function handleEnter(e){
+        if (e.key === "Enter"){
+            handleSubmit(e);
+        }
     }
     function handleSubmit(e){
         e.preventDefault();
-        if(state.length > 3) {
-            dispatch(getDogByName(state));
-        } else {
-            alert("Debes ingresar una raza...")
-        };
-        setState('');
+        if(!name){
+            alert('Please, enter a name')
+        } else{
+            dispatch(getDogByName(name));
+            setName('');
+            setPagination(1);
+            
+        }
     }
-  return (
-    <form className={style.form}>
-        <input
-        type="text"
-        placeholder="Raza..."
-        name="raza"
-        value={state}
-        onClick={onClick}
-        onChange={handleChange}
-        />
-        <button onClick={handleSubmit} value='Buscar'>Buscar</button>
-        </form>
-  )
-}
 
-export default Search
+    return(
+        <div >
+            <div >
+                <input type='text' placeholder={'Search a dog...'}
+                value={name} onKeyPress={handleEnter} 
+                onChange={(e) => handleSearch(e)}
+                />
+                <button type='Submit' 
+                onClick={(e) =>handleSubmit(e)}
+                >Search</button>
+            </div>
+        </div>
+    )
+}

@@ -1,160 +1,151 @@
-import React, { useEffect, useState, useCallback } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { getTemper, raceCreator } from '../../redux/actions/actionsCreator';
-import NavBar from '../NavBar/NavBar';
-const ALPHA = /^[a-zA-Z\s]+$/;
-function validate(state){
-    let errors = {};
-    if(!state.name){
-        errors.name = "You have to enter a name...";
-     } else if (state.name.length < 4){
-        errors.name = "The title is invalid. Must be more than 4 characters...";
-     } else if(!ALPHA.test(state.name)){
-        errors.name = 'Only letters are allowed...';
-     }
-     if(state.height_min > state.height_max){
-        errors.height = "The minimum height cannot be greater than the maximum weight"
-     }
-     if(state.weight_min > state.weight_max){
-        errors.weight = "The minimum height cannot be greater than the maximum weight"
-     }
-     return errors;
-}
+/* import NavBar from '../NavBar/NavBar'; */
+
+function validate(input) {
+    var errors = {};
+  
+  
+    if (!input.name || !/^[A-Za-z\s]+$/g.test(input.name)){
+      errors.name = "Only letters are allowed";
+  }
+  if(!input.heightMin || !/^[1-9]\d*(\.\d+)?$/.test(input.heightMin)){
+      errors.heightMin = 'Only numbers are allowed';
+  }
+  if(!input.heightMax || !/^[1-9]\d*(\.\d+)?$/.test(input.heightMax)){
+      errors.heightMax = 'Only numbers are allowed';
+  }
+  if(parseInt(input.heightMax) <= parseInt(input.heightMin)){
+      errors.heightMin = 'Min value must to be lower than max valur';
+  }
+  if(!input.weightMin || !/^[1-9]\d*(\.\d+)?$/.test(input.weightMin)){
+      errors.weightMin = 'Only numbers are allowed';
+  }
+  if(!input.weightMax || !/^[1-9]\d*(\.\d+)?$/.test(input.weightMax)){
+      errors.weightMax = 'Only numbers are allowed';
+  }
+  if(parseInt(input.weightMax) <= parseInt(input.weightMin)){
+      errors.weightMin = 'Min value must to be lower than max valur';
+  }
+  if(!input.lifespanMin || !/^[1-9]\d*(\.\d+)?$/.test(input.lifespanMin)){
+      errors.lifespanMin = 'Only numbers are allowed';
+  }
+  if(!input.lifespanMax || !/^[1-9]\d*(\.\d+)?$/.test(input.lifespanMax)){
+  errors.lifespanMax = 'Only numbers are allowed';
+  }
+  if(parseInt(input.lifespanMax) <= parseInt(input.lifespanMin)){
+      errors.lifespanMin = 'Min value must to be lower than max valur';
+  }
+  if (input.image && !/[a-z0-9-.]+\.[a-z]{2,4}\/?([^\s<>#%",{}\\|^[\]`]+)?$/.test(input.image) ){
+      errors.image = 'Only URL or empty are allowed';
+  }
+  return errors
+  }
 function DogCreate() {
-    const dispatch = useDispatch();
-
-    const [tempers, setTempers] = useState({
-        temperamentos: [
-            {id: 0, value: "Stubborn", isChecked: false},
-            {id: 1, value: "Curious", isChecked: false},
-            {id: 2, value: "Playful", isChecked: false},
-            {id: 3, value: "Adventurous", isChecked: false},
-            {id: 4, value: "Active", isChecked: false},
-            {id: 5, value: "Fun-loving", isChecked: false},
-            {id: 6, value: "Aloof", isChecked: false},
-            {id: 7, value: "Clownish", isChecked: false},
-            {id: 8, value: "Dignified", isChecked: false},
-            {id: 9, value: "Independent", isChecked: false},
-            {id: 10, value: "Happy", isChecked: false},
-        ], 
-    });
-    const [state, setState] = useState({
+    const [ input, setInput] = useState({
         name: '',
-        height: '',
-        weight: '',
-        life_span: '',
+        weightMin: '',
+        weightMax: '',
+        heightMin: '',
+        heightMax: '',
+        life_spanMin: '',
+        life_spanMax: '',
         image: '',
+        temperament: []
     })
-    const [errors, setErrors] = useState({
-        name: '',
-        weight: '',
-        height: '',
-    });
-    const dogTemp = useSelector(state => state.dogsTempers )
-  function handleChangeTemper(e){
-    let temperamentos = tempers.temperamentos;
-    temperamentos.forEach(temp =>{
-        if(temp.value === e.target.value){
-            temp.isChecked = e.target.checked;
-        };
-    });
-    setTempers({temperamentos: temperamentos,})
-  };
+    const [errors, setErrors] = useState({})
 
-  function handleChange(e){
-    const { name, value } = e.target;
-    setErrors(validate({
-        ...state,
-        [name]: value
-    }));
-    setState({
-        ...state,
-        [name]: value,
-    });
-  };
-  function handleSubmit(e){
-    e.preventDefault();
-    const data = {state, tempers};
-    dispatch(raceCreator(data));
-    console.log(data);
-    setState({
-        name: '',
-        height: '',
-        weight: '',
-        life_span: '',
-        image: '',
-    });
-    setErrors({
-        name: '',
-        weight: '',
-        height: '',
-    });
-    setTempers({
-         temperamentos: [
-            {id: 0, value: "Stubborn", isChecked: false},
-            {id: 1, value: "Curious", isChecked: false},
-            {id: 2, value: "Playful", isChecked: false},
-            {id: 3, value: "Adventurous", isChecked: false},
-            {id: 4, value: "Active", isChecked: false},
-            {id: 5, value: "Fun-loving", isChecked: false},
-            {id: 6, value: "Aloof", isChecked: false},
-            {id: 7, value: "Clownish", isChecked: false},
-            {id: 8, value: "Dignified", isChecked: false},
-            {id: 9, value: "Independent", isChecked: false},
-            {id: 10, value: "Happy", isChecked: false},
-        ], 
-    });
-  };
+    const dispatch = useDispatch();
+   
 
-   const get = useCallback(()=>{   
-    dispatch(getTemper());
-}, [dispatch]); 
 
-  useEffect(()=>{
-    get();   
-  }, [get])
+    const temps = useSelector((state) => state.dogsTempers);
 
-    return (
-        
-    <>
-    <NavBar/>
-    <form onSubmit={handleSubmit}>
-        <label>Title: </label>
-        <input type='text' id='name' name='name' value={state.name} onChange={handleChange}/>
-        {errors.name && (<p>{errors.name}</p>)}
-        <label>Height: </label>
-        <input type="number" id='height' name='height' value={state.height} onChange={handleChange} min="1" max="100" step="1"/>
-        {/* <label>Height max: </label>
-        <input type="number" id='height_max' name='height_max' value={state.height.height_max} onChange={handleChange} min="1" max="100" step="1"/>
-         */}<label>Weight: </label>
-        <input type="number" id='weight' name='weight' value={state.weight} onChange={handleChange} min="1" max="100" step="1"/>
-        {/* <label>Weight max: </label>
-        <input type="number" id='weight_max' name='weight_max' value={state.weight.weight_max} onChange={handleChange} min="1" max="100" step="1"/>
-        */} <label>Life span: </label>
-        <input type='number' id='life_span' name='life_span' value={state.life_span} onChange={handleChange} min="1" max="100" step="1" />
-        <label>Image:</label>
-        <input type="text" id='image' name='image' value={state.image} onChange={handleChange} />
-        
-        <label>Temperaments: </label>
-        {dogTemp.map(temp=>{
-            return(
-                <div key={temp.id}>
-                    <input
-                    type='checkbox'
-                    id={temp.name}
-                    name={temp.name}
-                    value={temp.name}
-                    onChange={handleChangeTemper}
-                    />
-                    <label>{temp.name}</label>
-                </div>
-            );
-        })
+    validate(input);
+    function handleChange(e){
+        setInput({
+            ...input,
+            [e.target.name]: e.target.value,
+        });
+        setErrors(
+            validate({
+                ...input,
+                [e.target.name]: e.target.value,
+            })
+        )
+    };
+    function handleSelect(e){
+        if(input.temperament.includes(e.target.value)) alert("The dog already has that temperament!")
+        else {
+            setInput({
+                ...input,
+                temperament: [...input.temperament, e.target.value],
+            });
         }
-        <button type='submit'>Create</button>
-    </form>
-    </>
-  )
-}
+    }   
+    function handleDelete(e){
+        setInput({
+            ...input,
+            temperament: input.temperament.filter((t) => t !== e),
+        });
+    }
+    function handleSubmit(e){
+        e.preventDefault();
+        dispatch(raceCreator(input));
+        setInput({
+            name: '',
+            weightMin: '',
+            weightMax: '',
+            heightMin: '',
+            heightMax: '',
+            life_spanMin: '',
+            life_spanMax: '',
+            image: '',
+            temperament: []
+        });
+            }
+    useEffect(()=>{
+        dispatch(getTemper());
+    }, [dispatch]);
+    return(
+        <div>
+            <Link to='/home'><button>Got to Home</button></Link>
+<form onSubmit={(e)=> handleSubmit(e)}>
+<label>Name:</label>
+<input name="name" type="text" placeholder="Enter a name..." onChange={(e)=> handleChange(e)}/>
+{errors.name && <span>{errors.name}</span>}
+<label>Weight Min:</label>
+<input name='weightMin' type='number' min='1' max='100' placeholder="Min" onChange={(e)=> handleChange(e)}/>
+<label>Weight Max:</label>
+<input name='weightMax' type='number' min='1' max='100' placeholder="Max" onChange={(e)=> handleChange(e)}/>
+<label>Height Min:</label>
+<input name='heightMin' type='number' min='1' max='100' placeholder="Min" onChange={(e)=> handleChange(e)}/>
+<label>Height Max:</label>
+<input name='heightMax' type='number' min='1' max='100' placeholder="Max" onChange={(e)=> handleChange(e)}/>
+<label>Life Span Min:</label>
+<input name='lifeSpanMin' type='number' min='1' max='100' placeholder="Min" onChange={(e)=> handleChange(e)}/>
+<label>Life Span Max:</label>
+<input name='lifeSpanMax' type='number' min='1' max='100' placeholder="Max" onChange={(e)=> handleChange(e)}/>
+<label>Image:</label>
+<input name='image' type='text' placeholder="URL" onChange={(e)=> handleChange(e)}/>
 
+<label>Temperament:</label>
+<select onChange={(e)=> handleSelect(e)}>
+    {temps.map(t=>(
+        <option key={t.id} value={t.name}>{t.name}</option>
+    )
+
+    )}
+    </select>
+    <label>Selected:</label>
+    { input.temperament.map(e=>(
+        <button onClick={()=>handleDelete(e)} key={e}>{e}</button>
+    ))}
+    <button type='submit'>Create</button>
+    </form>
+        </div>
+    )
+}
 export default DogCreate

@@ -1,6 +1,7 @@
 
 import React from 'react';
 import AtoZ from '../Ordering/AtoZ';
+import Pagination from '../Pagination/Pagination';
 import Search from '../Search/Search';
 
 function SearchBar() {
@@ -8,6 +9,7 @@ function SearchBar() {
         <>
       <Search/>
       <AtoZ/>
+      <Pagination/>
       </>
   )
 }

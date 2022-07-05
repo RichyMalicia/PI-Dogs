@@ -1,32 +1,26 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { getAllDogs, orderByName, orderByWeight } from '../../redux/actions/actionsCreator';
+import { useDispatch } from 'react-redux'
+import { orderByName } from '../../redux/actions/actionsCreator';
 
-function AtoZ() {
+function AtoZ({setOrder}) {
     const dispatch = useDispatch();
-    const dogsLoaded = useSelector(state => state.dogsLoaded);
-    function handleChange(e){
-        const value = e.target;
-        if(value === 'default') dispatch(getAllDogs());
-        if(value === 'aZ'  || value === 'zA') dispatch(orderByName(dogsLoaded, value));
-        if(value === 'menor' || value === 'mayor') dispatch(orderByWeight(dogsLoaded, value));
+    
+    function handleName(e){
+        e.preventDefault();
+        dispatch(orderByName(e.target.value));
+         setOrder(e.target.value); 
     }
   return (
     <div>
         <label> Order By: </label>
-        <select
-        name='order'
-        id='order'
-        onChange={handleChange}>
-            <option value='default'>Default</option>
-            <optgroup label="Name">
-                <option value='aZ'> A - Z</option> 
-                <option value='zA'> Z - A</option> 
-            </optgroup>
-            <optgroup label='Weight'>
-                <option value='menor'> Low - High </option>
-                <option value='mayor'> High - Low </option>
-            </optgroup>
+        
+            
+            <select onChange={(e)=> handleName(e)}>
+        <option hidden value=''> Name order</option>
+                <option value='A - Z'> A - Z </option>
+                <option value='Z - A'> Z - A </option>
+           
+        
         </select>
         
         </div>

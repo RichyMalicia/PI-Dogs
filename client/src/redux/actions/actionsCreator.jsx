@@ -31,8 +31,8 @@ export function getDogID(id){
 export function cleanDetail(){
     return function(dispatch){
         return axios(`http://localhost:3001/dog/`)
-        .then(resp => {
-            dispatch({type: CLEAN_DETAIL, payload: resp.data})
+        .then(() => {
+            dispatch({type: CLEAN_DETAIL})
         })
         .catch(error => console.error(error))
     }
@@ -64,15 +64,11 @@ export function raceCreator(data){
         .catch((e)=> console.log(e))
     };
 };
-export function orderByName(dogs, sort){
-    return function(dispatch){
-        dispatch({type: A_TO_Z, payload: {dogs, sort}})
-    };
+export function orderByName(payload){
+    return{ type: A_TO_Z, payload };
 };
-export function orderByWeight(dogs, sort){
-    return function(dispatch){
-        dispatch({type: WEIGHT, payload: {dogs, sort}})
-    }
+export function orderByWeight(payload){
+    return {type: WEIGHT, payload}
 }
 export function setPagination(payload){
     return function(dispatch){

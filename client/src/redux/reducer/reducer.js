@@ -1,5 +1,5 @@
 import { GET_ALL_DOGS, CLEAN_DETAIL, GET_ALL_TEMPER, GET_DOG_NAME, GET_DOG_ID, GET_TEMPER, A_TO_Z, WEIGHT, PAGINATION  } from '../actions/actions';
-import { ordering } from './auxx/ordering'
+
 const initialState = {
     numPage: 1,
     dogsLoaded: [],
@@ -27,7 +27,7 @@ export default function reducer(state = initialState, {type, payload}){
         case GET_DOG_NAME:
             return{
                 ...state,
-                dogsDetail: payload,
+                dogsLoaded: payload,
             };
             case GET_TEMPER:
                 return{
@@ -35,19 +35,33 @@ export default function reducer(state = initialState, {type, payload}){
                     dogsTempers: payload,
                 };
             case A_TO_Z:
+                const filterName = payload === 'A - Z' ?
+                state.dogsLoaded.sort((dog1, dog2) => dog1.name.localeCompare(dog2.name)):
+                state.dogsLoaded.sort((dog1, dog2) => dog2.name.localeCompare(dog1.name));
                 return{
                     ...state,
-                    dogsLoaded: ordering(payload.dogs, payload.sort),
+                    dogsLoaded: filterName
                 };
             case WEIGHT:
-                return{
+                const filterWeight = payload === "Higher" ?
+                state.dogsLoaded.sort((dog1, dog2) => {
+                    if(dog1.name === "Olde English Bulldogge") dog1.weightMin = 27;
+                    else if(dog2.name === "Olde English Bulldogge") dog2.weightMin = 27;
+                    return (parseInt(dog2.weightMin)) - (parseInt(dog1.weightMin))
+                }) :
+                state.dogsLoaded.sort((dog1, dog2) =>{
+                    if(dog1.name === "Olde English Bulldogge") dog1.weightMin =27;
+                    else if(dog2.name === "Olde English Bulldogge") dog2.weightMin = 27;
+                    return (parseInt(dog1.weightMin)) - (parseInt(dog2.weightMin))
+                });
+                    return{
                     ...state,
-                    dogsLoaded: ordering(payload.dogs, payload.sort),
+                    dogsLoaded: filterWeight,
                 };
             case CLEAN_DETAIL:
                 return{
                     ...state,
-                    dogsDetail: payload,
+                    dogsDetail: [],
                 };
             case PAGINATION:
                 return{
