@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GET_ALL_DOGS, CLEAN_DETAIL, PAGINATION, GET_ALL_TEMPER, GET_DOG_ID, GET_DOG_NAME, CREATE_DOG, GET_TEMPER, A_TO_Z, WEIGHT} from './actions';
+import { FILTER_DB, FILTER_T, GET_ALL_DOGS, CLEAN_DETAIL, PAGINATION, GET_ALL_TEMPER, GET_DOG_ID, GET_DOG_NAME, /* CREATE_DOG */ GET_TEMPER, A_TO_Z, WEIGHT} from './actions';
 
 export  function getAllDogs(){
     return function(dispatch){
@@ -55,17 +55,14 @@ export function getAllTemper(){
         .catch((e)=>console.log(e))
     }
 }
-export function raceCreator(data){
-    return function(dispatch){
-        return axios.post(`http://localhost:3001/dog`, data)
-        .then(resp =>{
-            dispatch({type: CREATE_DOG, payload: resp.data });
-        })
-        .catch((e)=> console.log(e))
+export function raceCreator(payload){
+    return async function(dispatch){
+        const newDog = await axios.post(`http://localhost:3001/dog`, payload)
+        return newDog
     };
 };
 export function orderByName(payload){
-    return{ type: A_TO_Z, payload };
+    return{type: A_TO_Z, payload };
 };
 export function orderByWeight(payload){
     return {type: WEIGHT, payload}
@@ -74,4 +71,10 @@ export function setPagination(payload){
     return function(dispatch){
         dispatch({type: PAGINATION, payload})
     }
+}
+export function filterDB(payload){
+    return{type: FILTER_DB, payload}
+}
+export function filterT(payload){
+    return{type: FILTER_T, payload}
 }
