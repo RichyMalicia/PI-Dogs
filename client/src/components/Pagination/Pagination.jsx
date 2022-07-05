@@ -1,6 +1,7 @@
 import React, { useCallback, useState, useEffect } from 'react'
 import { setPagination } from '../../redux/actions/actionsCreator'
  import { useDispatch, useSelector } from 'react-redux' 
+ import style from './Pag.module.css'
 
 export default function Pagination() {
   const dispatch = useDispatch()
@@ -31,7 +32,7 @@ export default function Pagination() {
   
   
     return (
-    <div>
+    <div className={style.container}>
         
         <button  onClick={firstPage}>First Page</button>
         <button  onClick={previousPage}>Prev</button>

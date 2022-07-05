@@ -1,17 +1,14 @@
-
 import React from 'react';
-import AtoZ from '../Ordering/AtoZ';
 import Pagination from '../Pagination/Pagination';
 import Search from '../Search/Search';
 
+
 function SearchBar() {
       return (
-        <>
+      <div >
       <Search/>
-      <AtoZ/>
       <Pagination/>
-      </>
+      </div>
   )
 }
-
 export default SearchBar

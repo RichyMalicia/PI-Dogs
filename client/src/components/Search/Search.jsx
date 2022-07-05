@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import { useDispatch } from 'react-redux';
 import { getDogByName, setPagination} from '../../redux/actions/actionsCreator';
-/* import style from './Search.module.css' */
+import style from './Search.module.css'
 
 
 export default function Search(){
@@ -32,13 +32,13 @@ export default function Search(){
     }
 
     return(
-        <div >
-            <div >
-                <input type='text' placeholder={'Search a dog...'}
+        <div className={style.container}>
+            <div className={style.cont2}>
+                <input className={style.input} type='text' placeholder={'Search a dog...'}
                 value={name} onKeyPress={handleEnter} 
                 onChange={(e) => handleSearch(e)}
                 />
-                <button type='Submit' 
+                <button className={style.btn} type='Submit' 
                 onClick={(e) =>handleSubmit(e)}
                 >Search</button>
             </div>
