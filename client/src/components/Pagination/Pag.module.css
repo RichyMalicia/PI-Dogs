@@ -1,0 +1,25 @@
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+    gap: 15px;
+    width: fit-content;
+    border: 1px solid black;
+    padding: 10px 30px;
+    border-radius: 20px;
+}
+.text{
+    font-size: 20px;
+    margin: 2.5px;
+}
+.container button{
+    width: 80px;
+    font-size: 12px;
+    font-weight: 700;
+    border-radius: 20px;
+}
+.container button:enabled{
+    cursor: pointer;
+    border: 1.5px solid black;
+}
