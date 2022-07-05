@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { getTemper, raceCreator } from '../../redux/actions/actionsCreator';
 /* import NavBar from '../NavBar/NavBar'; */
 
@@ -29,14 +29,14 @@ function validate(input) {
   if(parseInt(input.weightMax) <= parseInt(input.weightMin)){
       errors.weightMin = 'Min value must to be lower than max valur';
   }
-  if(!input.lifespanMin || !/^[1-9]\d*(\.\d+)?$/.test(input.lifespanMin)){
-      errors.lifespanMin = 'Only numbers are allowed';
+  if(!input.life_spanMin || !/^[1-9]\d*(\.\d+)?$/.test(input.life_spanMin)){
+      errors.life_spanMin = 'Only numbers are allowed';
   }
-  if(!input.lifespanMax || !/^[1-9]\d*(\.\d+)?$/.test(input.lifespanMax)){
-  errors.lifespanMax = 'Only numbers are allowed';
+  if(!input.life_spanMax || !/^[1-9]\d*(\.\d+)?$/.test(input.life_spanMax)){
+  errors.life_spanMax = 'Only numbers are allowed';
   }
-  if(parseInt(input.lifespanMax) <= parseInt(input.lifespanMin)){
-      errors.lifespanMin = 'Min value must to be lower than max valur';
+  if(parseInt(input.life_spanMax) <= parseInt(input.life_spanMin)){
+      errors.life_spanMin = 'Min value must to be lower than max valur';
   }
   if (input.image && !/[a-z0-9-.]+\.[a-z]{2,4}\/?([^\s<>#%",{}\\|^[\]`]+)?$/.test(input.image) ){
       errors.image = 'Only URL or empty are allowed';
@@ -58,6 +58,7 @@ function DogCreate() {
     const [errors, setErrors] = useState({})
 
     const dispatch = useDispatch();
+    const historial = useHistory();
    
 
 
@@ -105,6 +106,7 @@ function DogCreate() {
             image: '',
             temperament: []
         });
+        historial.push('/home');
             }
     useEffect(()=>{
         dispatch(getTemper());
@@ -118,18 +120,25 @@ function DogCreate() {
 {errors.name && <span>{errors.name}</span>}
 <label>Weight Min:</label>
 <input name='weightMin' type='number' min='1' max='100' placeholder="Min" onChange={(e)=> handleChange(e)}/>
+{errors.weightMin && <span>{errors.weightMin}</span>}
 <label>Weight Max:</label>
 <input name='weightMax' type='number' min='1' max='100' placeholder="Max" onChange={(e)=> handleChange(e)}/>
+{errors.weightMax && <span>{errors.weightMax}</span>}
 <label>Height Min:</label>
 <input name='heightMin' type='number' min='1' max='100' placeholder="Min" onChange={(e)=> handleChange(e)}/>
+{errors.heightMin && <span>{errors.heightMin}</span>}
 <label>Height Max:</label>
 <input name='heightMax' type='number' min='1' max='100' placeholder="Max" onChange={(e)=> handleChange(e)}/>
+{errors.heightMax && <span>{errors.heightMax}</span>}
 <label>Life Span Min:</label>
-<input name='lifeSpanMin' type='number' min='1' max='100' placeholder="Min" onChange={(e)=> handleChange(e)}/>
+<input name='life_spanMin' type='number' min='1' max='100' placeholder="Min" onChange={(e)=> handleChange(e)}/>
+{errors.life_spanMin && <span>{errors.life_spanMin}</span>}
 <label>Life Span Max:</label>
-<input name='lifeSpanMax' type='number' min='1' max='100' placeholder="Max" onChange={(e)=> handleChange(e)}/>
+<input name='life_spanMax' type='number' min='1' max='100' placeholder="Max" onChange={(e)=> handleChange(e)}/>
+{errors.life_spanMax && <span>{errors.life_spanMax}</span>}
 <label>Image:</label>
 <input name='image' type='text' placeholder="URL" onChange={(e)=> handleChange(e)}/>
+{errors.image && <span>{errors.image}</span>}
 
 <label>Temperament:</label>
 <select onChange={(e)=> handleSelect(e)}>

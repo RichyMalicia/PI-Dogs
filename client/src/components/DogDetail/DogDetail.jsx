@@ -27,7 +27,7 @@ export default function DogDetail() {
     <p>Weight: {data.weight && data.weight.metric} kgs.</p>
     <p>Height: {data.height && data.height.metric}  cms.</p>
     <p>Temperament: {data.temperament && data.temperament}</p>
-    <p>Life Span: {data.life_span && data.life_span} years</p>
+    <p>Life Span: {data.life_span && data.life_span}</p>
     <img src={data.reference_image_id? `https://cdn2.thedogapi.com/images/${data.reference_image_id}.jpg` : data.image} alt="perro" style={{height: 300}}/>
    
     </>

@@ -13,7 +13,7 @@ function DogsCards() {
   const dogsCharged = useSelector(state => state.dogsLoaded);
   /* const dogsFiltered = dogsCharged.slice(numPage, numPage + 8);
   */ 
-  console.log("NUM ", numPage);
+
 const grupo = 8;
 let finalCount = numPage * grupo;
 let initialCount = finalCount - grupo;
@@ -34,6 +34,7 @@ let filteredDogs = dogsCharged.slice(initialCount, finalCount)
      
         {filteredDogs.map(d=> {
         return(
+          
         <DogCard 
                 id={d.id}
                key={d.id}
@@ -48,6 +49,7 @@ let filteredDogs = dogsCharged.slice(initialCount, finalCount)
                life_spanMax={d.life_spanMax}
                
                />
+              
         )})}
             </div>
             

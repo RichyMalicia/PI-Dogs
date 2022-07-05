@@ -1,33 +1,48 @@
-.cardDog{
-    width: 18em;
-    height: 24em;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+.container{
+
+}
+.cardDog {
     position: relative;
-    margin: 1em; 
-}
-.cardDog span{
-    font-size: 1.2rem;
-    margin-bottom: .5em;
-}
-.cardDog img{
-width: 11em;
-height: 9em;
-position: absolute;
-bottom: 1em;
-}
-.info{
-    width: 30em;
-    height: 20em;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 2.2em;
-}
-hr {
-    width: 80%;
-    margin: .5em 0;
-  
+    align-items: center;
+    background-color:#fff;
+    border: 1px solid black;
+    padding: 1rem;
+    gap: 1%;
+    width: 400px;
+    margin:  20px;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0px 1px 10px rgba(0,0,0,0.2);
+    cursor: default;
+    transition: all 400ms ease;
+ }
+ .cardDog :hover{
+    box-shadow: 5px 5px 20px rgba(0,0,0,0.4);
+    transform: translateY(-3%);
+ }
+ .cardDog img {
+    width: 100%;
+    height: 210px;
+ }
+ .info{
+    padding: 15px;
+    text-align: center;
+ }
+ .info span{
+    line-height: 1.5;
+    color: #6a6a6a;
+ }
+ .info h3{
+    font-weight: 400;
+    margin-bottom: 15px;
+ }
+.info a{
+    width: 100%;
+    text-decoration: none;
+    display: inline-block;
+    padding: 10px;
+    margin-top: 10px;
 }

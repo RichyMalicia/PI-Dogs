@@ -1,38 +1,29 @@
-import React, {useEffect, useState} from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { getAllDogs, getTemper } from '../../redux/actions/actionsCreator';
-import DogsCards from '../DogsCards/DogsCards'
-import NavBar from '../NavBar/NavBar'
-import Pagination from '../Pagination/Pagination';
+import React, {useState} from 'react';
+import DogsCards from '../DogsCards/DogsCards';
+import NavBar from '../NavBar/NavBar';
+import SearchBar from '../SearchBar/SearchBar';
+import Loading from '../Loading/Loading'
+import style from './Home.module.css'
 
 function Home() {
-  const dispatch = useDispatch();
-  const dogsLoaded = useSelector(state => state.dogsLoaded)
-  useEffect(()=>{
-    dispatch(getAllDogs())
-  }, [dispatch]);
-  useEffect(()=>{
-    dispatch(getTemper())
-  }, [dispatch])
-  const [order, setOrder] = useState('');
+
+  const [loading, setLoading] = useState(true);
+  const [/* order */, setOrder] = useState('');
+  const [/* page */, setPage] = useState(1);
 
   return (
-    <div>
-        
-        <NavBar setOrder={setOrder} />
-        <DogsCards/>
-        {dogsLoaded > 0 ? (
-          <div>
-            <Pagination/>
+    <div className={style.home}>
+      {loading ? <Loading setLoading={setLoading}/> :
+       <div>
+          <SearchBar/>
+       <NavBar setOrder={setOrder} setPage={setPage} />    
             <div>
-              <DogsCards dogsLoaded={dogsLoaded} />
-            </div>
-            <Pagination />
+              
+            <DogsCards/>
           </div>
-        ) : <></>
-        }
-    </div>
+          </div>
+}
+          </div>    
   )
 }
-
 export default Home

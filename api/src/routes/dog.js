@@ -114,11 +114,11 @@ router.get("/:id", async(req, res, next)=>{
 
 router.post("/", (req, res, next)=>{
     const dog = req.body;
-     return Dog.create({
+        return Dog.create({
         ...dog,
-    id: uuidv4()})
-    .then((e)=> res.send(e))
+        id: uuidv4()})
+    .then((e)=> res.status(200).json(e))
     .catch(error=> next(error))
 })
-router.delete("/:id", )
+
 module.exports = router;
