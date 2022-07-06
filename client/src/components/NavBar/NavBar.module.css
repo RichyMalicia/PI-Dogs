@@ -1,28 +1,37 @@
-.nav{
+.container{
     display: flex;
     justify-content: space-around;
-    align-content: center;
+    align-items: center;
     height: 60px;
+    background-color: rgba(155, 155, 155, 0.9);
     border-bottom: 2px solid black;
 }
 
 .filters{
     display: flex;
     justify-content: space-around;
-    
 }
+
 .btn{
     width: 80px;
     font-size: 12px;
     font-weight: 700;
+    background-color: rgb(228, 228, 228, 0.8);
     border-radius: 20px;
     height: 40px;
     cursor: pointer;
 }
-.imagenP img {
-    width: 5em;
-    height: 5em;
+.create{
+    width: 80px;
+    font-size: 12px;
+    font-weight: 700;
+    background-color: rgb(228, 228, 228, 0.8);
+    border-radius: 20px;
+    height: 40px;
+    cursor: pointer;
+    
 }
-.imagenP img:hover {
-    transform: scale(1.1);
-}
+.create:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 40px -10px rgba(0, 0, 0, 0.25);
+  }

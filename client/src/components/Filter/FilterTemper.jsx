@@ -1,10 +1,11 @@
 import React from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { filterT } from '../../redux/actions/actionsCreator';
 import style from './Filter.module.css'
 
 function FilterTemper({setPage}) {
     const dispatch = useDispatch();
+    const temps = useSelector(state => state.dogsTempers)
     function handleTemp(e){
         e.preventDefault();
         dispatch(filterT(e.target.value));
@@ -15,8 +16,9 @@ function FilterTemper({setPage}) {
         <select className={style.filter} onChange={(e)=> handleTemp(e)}>
                 <option hidden value=''> Temper</option>
                 <option value='All'> All </option>
-                <option value='Api'> Api </option>
-                <option value='Db'> Db </option>
+               {temps.map((tem)=> (
+                <option value={tem.name} key={tem.id}>{tem.name}</option>
+               ))}
         
             </select>
     </div>

@@ -35,9 +35,10 @@ let filteredDogs = dogsCharged.slice(initialCount, finalCount)
         {filteredDogs.map(d=> {
         return(
           
+
         <DogCard 
                 id={d.id}
-               key={d.id}
+               key={d.name}
                name={d.name}
                img={d.image} 
                temperament={d.temperament}
@@ -49,7 +50,7 @@ let filteredDogs = dogsCharged.slice(initialCount, finalCount)
                life_spanMax={d.life_spanMax}
                
                />
-              
+             
         )})}
             </div>
             

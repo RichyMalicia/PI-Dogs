@@ -15,8 +15,8 @@ function Home() {
     <div className={style.home}>
       {loading ? <Loading setLoading={setLoading}/> :
        <div>
-          <SearchBar/>
        <NavBar setOrder={setOrder} setPage={setPage} />    
+          <SearchBar/>
             <div>
               
             <DogsCards/>

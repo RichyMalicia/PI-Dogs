@@ -10,7 +10,8 @@ function LandingPage() {
       
      
       <div className={style.text}>
-      <NavLink to="/home">Bienvenidos a Henry Dogs!</NavLink>
+<h1>Welcome to Henry Dogs!</h1>
+      <NavLink to="/home">Home</NavLink>
       </div>
       </div>
       </div>

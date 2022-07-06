@@ -36,6 +36,7 @@ export default function Pagination() {
         
         <button  onClick={firstPage}>First Page</button>
         <button  onClick={previousPage}>Prev</button>
+  <h3>{numPage} - {filteredDogs}</h3>      
       <button onClick={nextPage}>Next</button>
       <button onClick={lastPage}>Last Page</button>
       

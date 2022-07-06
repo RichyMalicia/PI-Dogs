@@ -12,8 +12,8 @@ function Weight({setOrder}) {
     }
   return (
     <div className={style.filter}>
-        <select onChange={(e)=> handleWeight(e)}>
-        <option hidden value=''> Weight order</option>
+        <select className={style.filter} onChange={(e)=> handleWeight(e)}>
+        <option hidden value=''>Weight</option>
                 <option value='Lower'> Low - High </option>
                 <option value='Higher'> High - Low </option>
            

@@ -8,7 +8,6 @@ export default function DogDetail() {
     const dispatch = useDispatch();
     const { id } = useParams();
     const data = useSelector(state => state.dogsDetail);
-    console.log("DATA", data);
 
     useEffect(()=>{
         dispatch(getDogID(id));
@@ -20,6 +19,14 @@ export default function DogDetail() {
     console.log("ID ", id)
     
     
+    if(!data) {
+        return (
+            <>
+            <NavBar/>
+        <img src='https://previews.123rf.com/images/lightwise/lightwise1508/lightwise150800076/44185374-p%C3%A1gina-de-error-404-no-encontrado-concepto-y-un-s%C3%ADmbolo-de-enlace-roto-o-muerto-como-un-perro-que-em.jpg' alt='not found'/> )
+        </>
+    )} else { 
+        
     return (
         <>
         <NavBar/>
@@ -29,9 +36,10 @@ export default function DogDetail() {
     <p>Temperament: {data.temperament && data.temperament}</p>
     <p>Life Span: {data.life_span && data.life_span}</p>
     <img src={data.reference_image_id? `https://cdn2.thedogapi.com/images/${data.reference_image_id}.jpg` : data.image} alt="perro" style={{height: 300}}/>
-   
+    
     </>
     )
- 
-  
-    }
+    
+    
+}
+}

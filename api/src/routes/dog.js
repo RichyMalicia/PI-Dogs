@@ -1,12 +1,7 @@
 const axios  = require('axios');
 const {Router, application} = require('express');
 const{v4: uuidv4} = require('uuid')
-
-const db = require('../db');
-
-/* const { getAllDogs, dogCreate, deleteDog, getDogByName } = require('../controllers/dogs'); */
 const {Dog, Temper} = require('../db');
-const e = require('express');
 const router = Router();
 const UUID = new RegExp("^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$");
 
@@ -24,12 +19,14 @@ const getApi = async () => {
             heightMin: d.height.metric.split ("-")[0] && d.height.metric.split ("-")[0],
             weightMax: d.weight.metric.split ("-")[1] && d.weight.metric.split ("-")[1],
             heightMax: d.height.metric.split ("-")[1] && d.height.metric.split ("-")[1],
-            lifeSpanMin: d.life_span.split ("-")[0] && d.life_span.split ("-")[0],
-            lifeSpanMax: d.life_span.split ("-")[1] && d.life_span.split ("-")[1],
+            life_spanMin: d.life_span.split ("-")[0] && d.life_span.split ("-")[0],
+            life_spanMax: d.life_span.split ("-")[1] && d.life_span.split ("-")[1],
             temperament: d.temperament ? d.temperament : "Unknown",
             image: d.image.url,
+            mine: false,
         };
     });
+    console.log("API", dataApi)
             return dataApi
     } catch (error) {
         console.log(error)
@@ -40,22 +37,24 @@ const getApi = async () => {
           const dbPerros =  await Dog.findAll({
             include: Temper,
         }); 
-    
+        var regex = /(\d+)/g;
         
         const info = dbPerros.map((e)=>{
+            let temp = e.tempers.map((e) => e.name);
+            let tempEnd = temp.join(", ");
             
             return {
+                
                 name: e.name,
             weightMin: e.weightMin,
             weightMax: e.weightMax,
             heightMin: e.heightMin,
             heightMax: e.heightMax,
-            lifeSpanMin: e.lifeSpanMin,
-            lifeSpanMax: e.lifeSpanMax,
+            life_spanMin: e.life_spanMin,
+            life_spanMax: e.life_spanMax,
             image: e.image ? e.image : "Not image",
-            temperament: e.temperament,
-    
-    
+            temperament: tempEnd,
+            mine: e.mine,
         };
         });
               return info
@@ -112,13 +111,42 @@ router.get("/:id", async(req, res, next)=>{
     
 }) 
 
-router.post("/", (req, res, next)=>{
-    const dog = req.body;
-        return Dog.create({
-        ...dog,
-        id: uuidv4()})
-    .then((e)=> res.status(200).json(e))
-    .catch(error=> next(error))
-})
+router.post("/", async (req, res, next)=>{
+    try{
+        let {
+            name,
+            weightMin,
+            weightMax,
+            heightMin,
+            heightMax,
+            life_spanMin,
+            life_spanMax,
+            image,
+            temperament,
+        } = req.body
+
+        const myDog = await Dog.create({
+            name,
+            weightMin,
+            weightMax,
+            heightMin,
+            heightMax,
+            life_spanMin,
+            life_spanMax,
+            image, 
+            
+        });
+        let dbTemper = await Temper.findAll({
+            where:{
+                name: temperament
+            },
+        });
+        await myDog.addTemper(dbTemper)
+     res.status(200).json(myDog)
+    } catch(e){
+        next(e);
+    };
+});
+
 
 module.exports = router;

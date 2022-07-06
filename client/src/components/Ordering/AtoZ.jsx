@@ -13,7 +13,7 @@ function AtoZ({setOrder}) {
   return (
       <div className={style.filter}>          
             <select className={style.filter} onChange={(e)=> handleOrder(e)}>
-                <option hidden value=''> Name order</option>
+                <option hidden value=''>Name</option>
                 <option value='A-Z'> A - Z </option>
                 <option value='Z-A'> Z - A </option>
         

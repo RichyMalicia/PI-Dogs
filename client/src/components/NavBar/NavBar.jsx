@@ -15,29 +15,21 @@ function NavBar({setOrder, setPage}) {
     setPage(1);
   }
   return (
-    <div className={style.nav}>
-        <Link to='/'>
-          <img src={(`https://e7.pngegg.com/pngimages/552/1/png-clipart-dogs-dogs.png`)} alt="Imagen perro"/>
-        </Link>
-      <nav>
-        <div className={style.imagenP}>
-          <div className={style.filters}> <AtoZ setOrder={setOrder}/>
-          <Weight setOrder={setOrder}/>
-          <button className={style.btn} onClick={(e)=> handleReset(e)}>Reset</button>
-          <FilterOrigin setOrder={setOrder}/>
-          <FilterTemper setOrder={setOrder}/>
-          </div>
-         
+        <div className={style.container}>
+          <span>Order by:</span>
+          <AtoZ className={style.filters} setOrder={setOrder}/>
+          <Weight className={style.filters} setOrder={setOrder}/>
+         <button className={style.btn} onClick={(e)=> handleReset(e)}>Reset</button>
+         <span>Filter by:</span>
+          <FilterOrigin className={style.filters} setOrder={setOrder} setPage={setPage}/>
+          <FilterTemper className={style.filters} setOrder={setOrder} setPage={setPage}/>
+          <Link  to='/createDog' ><button className={style.create}>Create Dog!</button>  </Link>
         </div>
-        <div>
-        <Link to='/home'> HOME </Link>
-       
-        <Link to='/createDog'> Create Dog </Link>
-     </div>
-     
-      </nav>
         
-    </div>
+     
+   
+   
+        
   )
 }
 

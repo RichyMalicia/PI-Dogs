@@ -2,10 +2,10 @@
    display: flex;
    flex-wrap: wrap;
    justify-content: space-around;
+ /*   padding-top: 25px;
+   padding-bottom: 25px; */
    width: 100%;
    text-decoration: none;
-   padding-top: 25px;
-   padding-bottom: 25px;
 /*    font-family: sans-serif;
    flex-direction: row;
    flex-wrap: wrap;

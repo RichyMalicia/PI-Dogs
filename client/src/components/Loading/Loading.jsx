@@ -1,4 +1,5 @@
 import React from 'react'
+import style from './Loading.module.css'
 
 function Loading({setLoading}) {
     setTimeout(()=>{
@@ -6,7 +7,7 @@ function Loading({setLoading}) {
     },2000)
   return (
     <div>
-      <h3>Loading...</h3>
+      <span  className={style.loader} ></span>
       </div>
   )
 }

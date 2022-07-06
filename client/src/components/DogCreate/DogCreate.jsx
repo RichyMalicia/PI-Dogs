@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { getTemper, raceCreator } from '../../redux/actions/actionsCreator';
 /* import NavBar from '../NavBar/NavBar'; */
+import style from './DogCreate.module.css'
 
 function validate(input) {
     var errors = {};
-  
   
     if (!input.name || !/^[A-Za-z\s]+$/g.test(input.name)){
       errors.name = "Only letters are allowed";
@@ -45,15 +45,15 @@ function validate(input) {
   }
 function DogCreate() {
     const [ input, setInput] = useState({
-        name: '',
-        weightMin: '',
-        weightMax: '',
-        heightMin: '',
-        heightMax: '',
+        name: "",
+        weightMin: "",
+        weightMax: "",
+        heightMin: "",
+        heightMax: "",
         life_spanMin: '',
         life_spanMax: '',
         image: '',
-        temperament: []
+        temperament: [],
     })
     const [errors, setErrors] = useState({})
 
@@ -63,6 +63,7 @@ function DogCreate() {
 
 
     const temps = useSelector((state) => state.dogsTempers);
+  
 
     validate(input);
     function handleChange(e){
@@ -79,6 +80,7 @@ function DogCreate() {
     };
     function handleSelect(e){
         if(input.temperament.includes(e.target.value)) alert("The dog already has that temperament!")
+        else if(input.temperament.length === 5) alert("Up to 4 temperaments")
         else {
             setInput({
                 ...input,
@@ -94,6 +96,18 @@ function DogCreate() {
     }
     function handleSubmit(e){
         e.preventDefault();
+        if (
+            input.name !== "" &&
+            /^[A-Za-z\s]+$/g.test(input.name) &&
+            input.heightMin !== "" &&
+            parseInt(input.heightMax) > parseInt(input.heightMin) &&
+            input.weightMin !== "" &&
+            parseInt(input.weightMax) > parseInt(input.weightMin) &&
+            input.life_spanMin !== "" &&
+            parseInt(input.life_spanMax) > parseInt(input.life_spanMin) &&
+            input.temperament.length !== 0 && 
+            (/[a-z0-9-.]+\.[a-z]{2,4}\/?([^\s<>#%",{}\\|^[\]`]+)?$/.test(input.image) || input.image === '')
+          ){
         dispatch(raceCreator(input));
         setInput({
             name: '',
@@ -104,56 +118,113 @@ function DogCreate() {
             life_spanMin: '',
             life_spanMax: '',
             image: '',
-            temperament: []
         });
         historial.push('/home');
+            } else {
+                alert ("Complete all please...!")
             }
+        }
     useEffect(()=>{
         dispatch(getTemper());
     }, [dispatch]);
     return(
         <div>
-            <Link to='/home'><button>Got to Home</button></Link>
-<form onSubmit={(e)=> handleSubmit(e)}>
+          <img src={`https://thumbs.dreamstime.com/b/cuatro-perritos-sobre-bandera-22597409.jpg`} alt='back' className={style.back}/>
+            <Link to='/home'><button className={style.btnH}>Got to Home</button></Link>
+<div className={style.contenedor}>
+<div className={style.cont}>
+<h1 className={style.title}>Dog creator!</h1>
+<form className={style.form} onSubmit={(e)=> handleSubmit(e)}>
+    <div className={style.divisor}>
+    <div className={style.name}>
 <label>Name:</label>
 <input name="name" type="text" placeholder="Enter a name..." onChange={(e)=> handleChange(e)}/>
+</div>
 {errors.name && <span>{errors.name}</span>}
+</div>
+<div className={style.fst}>
+    <div className={style.sec}>
+    <div className={style.text}>
 <label>Weight Min:</label>
 <input name='weightMin' type='number' min='1' max='100' placeholder="Min" onChange={(e)=> handleChange(e)}/>
-{errors.weightMin && <span>{errors.weightMin}</span>}
+</div>
+<div className={style.text} >
 <label>Weight Max:</label>
 <input name='weightMax' type='number' min='1' max='100' placeholder="Max" onChange={(e)=> handleChange(e)}/>
-{errors.weightMax && <span>{errors.weightMax}</span>}
+</div>
+</div>
+<div className={style.sec}>
+{errors.weightMin && <p>{errors.weightMin}</p>}
+{errors.weightMax && <p>{errors.weightMax}</p>}
+</div>
+</div>
+<div className={style.fst}>
+    <div className={style.sec}>
+    <div className={style.text}> 
 <label>Height Min:</label>
 <input name='heightMin' type='number' min='1' max='100' placeholder="Min" onChange={(e)=> handleChange(e)}/>
-{errors.heightMin && <span>{errors.heightMin}</span>}
+</div>
+<div> 
 <label>Height Max:</label>
 <input name='heightMax' type='number' min='1' max='100' placeholder="Max" onChange={(e)=> handleChange(e)}/>
-{errors.heightMax && <span>{errors.heightMax}</span>}
+</div>
+</div>
+<div className={style.sec}> 
+{errors.heightMin && <p>{errors.heightMin}</p>}
+{errors.heightMax && <p>{errors.heightMax}</p>}
+</div>
+</div>
+<div className={style.fst}>
+<div className={style.sec}>
+<div className={style.text}>
 <label>Life Span Min:</label>
 <input name='life_spanMin' type='number' min='1' max='100' placeholder="Min" onChange={(e)=> handleChange(e)}/>
-{errors.life_spanMin && <span>{errors.life_spanMin}</span>}
+</div>
+<div>
 <label>Life Span Max:</label>
 <input name='life_spanMax' type='number' min='1' max='100' placeholder="Max" onChange={(e)=> handleChange(e)}/>
-{errors.life_spanMax && <span>{errors.life_spanMax}</span>}
+</div>
+</div>
+<div className={style.sec}>
+{errors.life_spanMin && <p>{errors.life_spanMin}</p>}
+{errors.life_spanMax && <p>{errors.life_spanMax}</p>}
+</div>
+</div>
+<div className={style.divisor}> 
+<div className={style.name}> 
 <label>Image:</label>
 <input name='image' type='text' placeholder="URL" onChange={(e)=> handleChange(e)}/>
-{errors.image && <span>{errors.image}</span>}
-
+</div>
+{errors.image && <p>{errors.image}</p>}
+</div>
+<div className={style.divisor}> 
+<div className={style.temps}> 
 <label>Temperament:</label>
-<select onChange={(e)=> handleSelect(e)}>
-    {temps.map(t=>(
+<select className={style.selTemp} onChange={(e)=> handleSelect(e)}>
+    {temps.map((t)=>(
+        
         <option key={t.id} value={t.name}>{t.name}</option>
     )
 
     )}
     </select>
+    <div className={style.Selected}>
     <label>Selected:</label>
-    { input.temperament.map(e=>(
-        <button onClick={()=>handleDelete(e)} key={e}>{e}</button>
+    { input.temperament.map((e)=>(
+        <button  className={style.DelButton} type="button" onClick={()=>handleDelete(e)} key={e}>{e}</button>
     ))}
-    <button type='submit'>Create</button>
+   
+     </div>
+        </div>
+        </div>
+    <div className={style.ContButton}>
+    <button className={style.btn} type='submit'>Create</button>
+        </div>
     </form>
+    </div>
+    <div>
+        </div>
+        </div>
         </div>
     )
 }

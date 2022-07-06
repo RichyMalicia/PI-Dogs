@@ -1,5 +1,5 @@
 export const GET_ALL_DOGS = 'GET_ALL_DOGS';
-export const GET_ALL_TEMPER = 'GET_ALL_DOGS';
+
 export const GET_DOG_ID = 'GET_DOG_ID';
 export const GET_DOG_NAME = 'GET_DOG_NAME';
 /* export const CREATE_DOG = 'CREATE_DOG'; */

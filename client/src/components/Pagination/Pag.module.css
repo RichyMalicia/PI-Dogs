@@ -8,6 +8,7 @@
     border: 1px solid black;
     padding: 10px 30px;
     border-radius: 20px;
+    margin: auto;
 }
 .text{
     font-size: 20px;
@@ -18,8 +19,4 @@
     font-size: 12px;
     font-weight: 700;
     border-radius: 20px;
-}
-.container button:enabled{
-    cursor: pointer;
-    border: 1.5px solid black;
 }
