@@ -7,7 +7,7 @@ function Loading({setLoading}) {
     },2000)
   return (
     <div>
-      <span  className={style.loader} ></span>
+      <span  className={style.loader} >Loading...</span>
       </div>
   )
 }

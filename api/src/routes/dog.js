@@ -1,7 +1,7 @@
 const axios  = require('axios');
 const {Router, application} = require('express');
 const{v4: uuidv4} = require('uuid')
-const {Dog, Temper} = require('../db');
+const {Dog, Temper } = require('../db');
 const router = Router();
 const UUID = new RegExp("^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$");
 
@@ -26,7 +26,7 @@ const getApi = async () => {
             mine: false,
         };
     });
-    console.log("API", dataApi)
+
             return dataApi
     } catch (error) {
         console.log(error)
@@ -44,7 +44,7 @@ const getApi = async () => {
             let tempEnd = temp.join(", ");
             
             return {
-                
+                id: e.id,
                 name: e.name,
             weightMin: e.weightMin,
             weightMax: e.weightMax,
@@ -91,26 +91,29 @@ router.get("/", async(req, res, next)=>{
 router.get("/:id", async(req, res, next)=>{
     const {id} = req.params;
     try{ 
-    if(UUID.test(id)){ 
-        return await Dog.findByPk(id)
-        .then(busqueda =>{
-                      res.status(200).json(busqueda);
+     if( id[0] === "s"){
+        return await Dog.findAll({
+            where:{
+                id: id,
+            },
+            include: Temper,
         })
-    
-    } else { 
-       
+        .then(busqueda =>{
+            console.log('BUSQUEDA', busqueda);
+                  res.status(200).json(busqueda[0]);
+        })
+    } else {     
         await axios(urlExt)
-     
         .then(dog => dog.data.find(d=>d.id == id))
+       
         .then(dog => res.status(200).json(dog))
-        
-        
-    }} catch (error) {
+    } } catch (error) {
         next(error)
     }
     
 }) 
-
+var id = 2;
+const idKey = () => id = id + 1;
 router.post("/", async (req, res, next)=>{
     try{
         let {
@@ -124,8 +127,10 @@ router.post("/", async (req, res, next)=>{
             image,
             temperament,
         } = req.body
+        console.log("BODY", req.body);
 
         const myDog = await Dog.create({
+            id: "s" + idKey(), 
             name,
             weightMin,
             weightMax,
@@ -134,6 +139,7 @@ router.post("/", async (req, res, next)=>{
             life_spanMin,
             life_spanMax,
             image, 
+            temperament
             
         });
         let dbTemper = await Temper.findAll({

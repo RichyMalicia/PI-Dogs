@@ -18,7 +18,8 @@ const grupo = 8;
 let finalCount = numPage * grupo;
 let initialCount = finalCount - grupo;
 let filteredDogs = dogsCharged.slice(initialCount, finalCount)
-  
+  console.log("PERROS" , dogsCharged);
+  console.log("FILTRO" , dogsCharged.filter(d=> d.name === "KAKA"));
 
     const perros = useCallback(()=>{
       dispatch(getAllDogs())
@@ -33,25 +34,25 @@ let filteredDogs = dogsCharged.slice(initialCount, finalCount)
     <div className={style.DogsCards}>
      
         {filteredDogs.map(d=> {
-        return(
-          
-
-        <DogCard 
-                id={d.id}
-               key={d.name}
-               name={d.name}
-               img={d.image} 
-               temperament={d.temperament}
-               weightMin={d.weightMin}
-               weightMax={d.weightMax}
-               heightMin={d.heightMin}
-               heightMax={d.heightMax}
-               life_spanMin={d.life_spanMin}
-               life_spanMax={d.life_spanMax}
-               
-               />
-             
-        )})}
+          return(
+            
+            
+            <DogCard 
+            id={d.id}
+            key={d.name}
+            name={d.name}
+            img={d.image} 
+            temperament={d.temperament}
+            weightMin={d.weightMin}
+            weightMax={d.weightMax}
+            heightMin={d.heightMin}
+            heightMax={d.heightMax}
+            life_spanMin={d.life_spanMin}
+            life_spanMax={d.life_spanMax}
+            
+            />
+            
+            )})}
             </div>
             
         )

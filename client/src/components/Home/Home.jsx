@@ -1,18 +1,31 @@
-import React, {useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import DogsCards from '../DogsCards/DogsCards';
 import NavBar from '../NavBar/NavBar';
 import SearchBar from '../SearchBar/SearchBar';
 import Loading from '../Loading/Loading'
-import style from './Home.module.css'
+import { cleanDetail, getTemper } from '../../redux/actions/actionsCreator';
+import { useDispatch } from 'react-redux';
+
 
 function Home() {
-
+const dispatch = useDispatch()
   const [loading, setLoading] = useState(true);
   const [/* order */, setOrder] = useState('');
   const [/* page */, setPage] = useState(1);
-
+  const limpieza = useCallback(()=>{
+    dispatch(cleanDetail())
+  },[dispatch]);
+  useEffect(()=>{
+    limpieza();
+  }, [limpieza])
+  const temps = useCallback(()=>{
+    dispatch(getTemper())
+  },[dispatch]);
+  useEffect(()=>{
+    temps();
+  }, [temps])
   return (
-    <div className={style.home}>
+    <div >
       {loading ? <Loading setLoading={setLoading}/> :
        <div>
        <NavBar setOrder={setOrder} setPage={setPage} />    
