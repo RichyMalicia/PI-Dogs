@@ -54,6 +54,7 @@ function DogCreate() {
         life_spanMax: '',
         image: '',
         temperament: [],
+        author: "",
     })
     const [errors, setErrors] = useState({})
 
@@ -118,6 +119,7 @@ function DogCreate() {
             life_spanMin: '',
             life_spanMax: '',
             image: '',
+            author: "",
         });
         historial.push('/home');
             } else {

@@ -3,7 +3,7 @@ import { FILTER_DB, FILTER_T, GET_ALL_DOGS, CLEAN_DETAIL, PAGINATION, GET_DOG_ID
 
 export  function getAllDogs(){
     return function(dispatch){
-        return  axios(`http://localhost:3001/dog`)
+        return  axios(`/dog`)
         .then(res => {
             dispatch({type: GET_ALL_DOGS, payload: res.data})
         })
@@ -12,7 +12,7 @@ export  function getAllDogs(){
 };
 export function getDogByName(name){
     return function(dispatch){
-        return axios(`http://localhost:3001/dog?name=${name}`)
+        return axios(`/dog?name=${name}`)
         .then(res => {
             dispatch({type: GET_DOG_NAME, payload: res.data})
         })
@@ -21,7 +21,7 @@ export function getDogByName(name){
 }
 export function getDogID(id){
     return function(dispatch){
-        return axios(`http://localhost:3001/dog/${id}`)
+        return axios(`/dog/${id}`)
         .then(resp => {
             dispatch({type: GET_DOG_ID, payload: resp.data})
         })
@@ -30,7 +30,7 @@ export function getDogID(id){
 }
 export function cleanDetail(){
     return function(dispatch){
-        return axios(`http://localhost:3001/dog/`)
+        return axios(`/dog/`)
         .then(() => {
             dispatch({type: CLEAN_DETAIL})
         })
@@ -39,7 +39,7 @@ export function cleanDetail(){
 }
 export function getTemper(){
     return async function(dispatch){
-        var temper = await axios(`http://localhost:3001/temper`)
+        var temper = await axios(`/temper`)
         return dispatch({ type: GET_TEMPER, payload: temper.data});
         }
         
@@ -47,7 +47,7 @@ export function getTemper(){
 
 export function raceCreator(payload){
     return async function(dispatch){
-        const newDog = await axios.post(`http://localhost:3001/dog`, payload)
+        const newDog = await axios.post(`/dog`, payload)
         return newDog
     };
 };

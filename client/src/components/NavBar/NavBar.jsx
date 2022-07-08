@@ -24,6 +24,7 @@ function NavBar({setOrder, setPage}) {
           <FilterOrigin className={style.filters} setOrder={setOrder} setPage={setPage}/>
           <FilterTemper className={style.filters} setOrder={setOrder} setPage={setPage}/>
           <Link  to='/createDog' ><button className={style.create}>Create Dog!</button>  </Link>
+          <Link  to='/home' ><button className={style.home}>Home</button>  </Link>
         </div>
         
      

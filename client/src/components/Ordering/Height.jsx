@@ -1,20 +1,19 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import { orderByWeight } from '../../redux/actions/actionsCreator';
+import { orderByHeight } from '../../redux/actions/actionsCreator';
 import style from './Ord.module.css'
-function Weight({setOrder, setPage}) {
+function Height({setOrder}) {
     const dispatch = useDispatch();
 
-    function handleWeight(e){
+    function handleHeight(e){
         e.preventDefault();
-        dispatch(orderByWeight(e.target.value));
+        dispatch(orderByHeight(e.target.value));
         setOrder(e.target.value);
-        setPage(1);
     }
   return (
     <div className={style.filter}>
-        <select className={style.filter} onChange={(e)=> handleWeight(e)}>
-        <option hidden value=''>Weight</option>
+        <select className={style.filter} onChange={(e)=> handleHeight(e)}>
+        <option hidden value=''>Height</option>
                 <option value='Lower'> Low - High </option>
                 <option value='Higher'> High - Low </option>
            
@@ -23,4 +22,4 @@ function Weight({setOrder, setPage}) {
   )
 }
 
-export default Weight
+export default Height

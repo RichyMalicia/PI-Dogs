@@ -1,16 +1,14 @@
 const axios  = require('axios');
 const {Router, application} = require('express');
+const { API_KEY, BASE_DATA } = process.env
 const{v4: uuidv4} = require('uuid')
 const {Dog, Temper } = require('../db');
 const router = Router();
 const UUID = new RegExp("^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$");
 
-const urlExt = `http://api.thedogapi.com/v1/breeds?api_key=d3f6e19f-db7f-4892-bb7a-2c183739a70a`
-
-
 const getApi = async () => {
     try {
-     const listado = await axios(urlExt)
+     const listado = await axios(`http://api.thedogapi.com/v1/breeds?api_key=${API_KEY}`)
     const dataApi = await listado.data.map(d =>{
         return{
             name: d.name,
@@ -112,6 +110,7 @@ router.get("/:id", async(req, res, next)=>{
     }
     
 }) 
+
 var id = 2;
 const idKey = () => id = id + 1;
 router.post("/", async (req, res, next)=>{

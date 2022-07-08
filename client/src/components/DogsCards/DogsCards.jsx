@@ -28,7 +28,7 @@ let filteredDogs = dogsCharged.slice(initialCount, finalCount)
       perros();
       cleanDetail();
     }, [perros])
-  
+  if(filteredDogs){
   return (
     
     <div className={style.DogsCards}>
@@ -55,7 +55,11 @@ let filteredDogs = dogsCharged.slice(initialCount, finalCount)
             )})}
             </div>
             
-        )
+        )} else {
+          return (
+            <></>
+          )
+        }
         
 }
 
