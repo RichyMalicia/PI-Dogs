@@ -1,4 +1,4 @@
-import { GET_ALL_DOGS, CLEAN_DETAIL, HEIGHT, GET_DOG_NAME, GET_DOG_ID, GET_TEMPER, A_TO_Z, WEIGHT, PAGINATION, FILTER_DB, FILTER_T  } from '../actions/actions';
+import { GET_ALL_DOGS, CLEAN_DETAIL, GET_DOG_NAME, GET_DOG_ID, GET_TEMPER, A_TO_Z, WEIGHT, PAGINATION, FILTER_DB, FILTER_T  } from '../actions/actions';
 
 const initialState = {
     numPage: 1,
