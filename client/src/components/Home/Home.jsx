@@ -4,7 +4,7 @@ import NavBar from '../NavBar/NavBar';
 import SearchBar from '../SearchBar/SearchBar';
 import Loading from '../Loading/Loading'
 import { cleanDetail, getTemper, setPagination } from '../../redux/actions/actionsCreator';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 
 function Home() {
@@ -12,7 +12,7 @@ const dispatch = useDispatch()
 
   const [loading, setLoading] = useState(true);
   const [/* order */, setOrder] = useState('');
-  const [ page , setPage] = useState(1);
+  const [ /* page */ , setPage] = useState(1);
   const limpieza = useCallback(()=>{
     dispatch(cleanDetail())
   },[dispatch]);

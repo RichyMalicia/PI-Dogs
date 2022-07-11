@@ -101,7 +101,7 @@ router.get("/:id", async(req, res, next)=>{
                   res.status(200).json(busqueda[0]);
         })
     } else {     
-        await axios(urlExt)
+        await axios(`https://api.thedogapi.com/v1/breeds/${id}`)
         .then(dog => dog.data.find(d=>d.id == id))
        
         .then(dog => res.status(200).json(dog))
