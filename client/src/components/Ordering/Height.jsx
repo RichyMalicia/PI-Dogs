@@ -2,13 +2,14 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import { orderByHeight } from '../../redux/actions/actionsCreator';
 import style from './Ord.module.css'
-function Height({setOrder}) {
+function Height({setOrder, setPage}) {
     const dispatch = useDispatch();
 
     function handleHeight(e){
         e.preventDefault();
         dispatch(orderByHeight(e.target.value));
         setOrder(e.target.value);
+        setPage(1)
     }
   return (
     <div className={style.filter}>

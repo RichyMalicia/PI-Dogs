@@ -17,8 +17,8 @@ function NavBar({setOrder, setPage}) {
   return (
         <div className={style.container}>
           <span>Order by:</span>
-          <AtoZ className={style.filters} setOrder={setOrder}/>
-          <Weight className={style.filters} setOrder={setOrder}/>
+          <AtoZ className={style.filters} setOrder={setOrder} setPage={setPage}/>
+          <Weight className={style.filters} setOrder={setOrder} setPage={setPage}/>
          <button className={style.btn} onClick={(e)=> handleReset(e)}>Reset</button>
          <span>Filter by:</span>
           <FilterOrigin className={style.filters} setOrder={setOrder} setPage={setPage}/>
